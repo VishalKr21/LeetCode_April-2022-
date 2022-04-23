@@ -1,0 +1,42 @@
+public class Codec {
+
+    // Encodes a URL to a shortened URL.
+    HashMap<String,String>map1 = new HashMap();
+    HashMap<String,String>map2 = new HashMap();
+    int ixd=0,time=0;
+    String s = "a";
+    public String encode(String l) {
+        int j = 0;
+        for(int i=0;i<l.length();i++)
+        {
+            if(l.charAt(i)=='/')break;
+            j++;
+        }
+        if(map1.containsKey(l))return map1.get(l);
+        String temp = s+ixd;
+        String x = l.substring(0,l.length()-j)+temp;
+        map1.put(l,x);
+        map2.put(x,l);
+        if(s.charAt(s.length()-1)=='z')
+        {
+            s = s.substring(0,s.length()-1)+'a';
+            ixd=0+time;
+            time++;
+        }
+        else
+        {
+            s = s.substring(0,s.length()-1)+s.charAt(s.length()-1)+1;
+            ixd++;
+        }
+        return x;
+    }
+
+    // Decodes a shortened URL to its original URL.
+    public String decode(String s) {
+        return map2.get(s);
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
